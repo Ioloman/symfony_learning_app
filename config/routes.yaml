@@ -1,3 +1,7 @@
 index:
    path: /
    controller: App\Controller\QuestionController::getHomepage
+
+question:
+   path: /question/{question}
+   controller: App\Controller\QuestionController::getQuestion
