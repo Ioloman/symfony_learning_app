@@ -3,3 +3,5 @@
 {% block body %}
 <h3>{{ hello }}</h3>
 {% endblock %}
+
+{% block javascripts %}{{ parent() }}{% endblock %}

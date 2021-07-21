@@ -4,10 +4,12 @@
 
 {% block body %}
 
-    <h2>{{ question }}</h2><br>
+    <div class="container-fluid text-center my-3">
 
-    {% for q in questions %}
-        <p>{{ q }}</p>
-    {% endfor %}
+        <h2>{{ question }}</h2><br>
 
+        {% for q in questions %}
+            <p>{{ q }}</p>
+        {% endfor %}
+    </div>
 {% endblock %}

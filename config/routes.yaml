@@ -5,3 +5,8 @@ index:
 question:
    path: /question/{question}
    controller: App\Controller\QuestionController::getQuestion
+
+voteComment:
+   path: /comments/{id}/vote/{direction<up|down>}
+   controller: App\Controller\CommentController::commentVote
+   methods: POST
