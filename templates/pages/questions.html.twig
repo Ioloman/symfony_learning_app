@@ -8,7 +8,7 @@
 
         <h2>{{ question }}</h2><br>
 
-        <h5>{{ questionText|raw }}</h5>
+        <h5>{{ questionText|markdown_filter }}</h5>
 
         {% for q in questions %}
             <p>{{ q }}</p>
