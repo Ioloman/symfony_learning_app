@@ -2,8 +2,12 @@ index:
    path: /
    controller: App\Controller\QuestionController::getHomepage
 
+newQuestion:
+   path: /question/new
+   controller: App\Controller\QuestionController::newQuestion
+
 question:
-   path: /question/{question}
+   path: /question/{slug}
    controller: App\Controller\QuestionController::getQuestion
 
 voteComment:

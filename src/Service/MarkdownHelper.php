@@ -26,10 +26,6 @@ class MarkdownHelper
 
     public function parse(string $text)
     {
-        if (stripos($text, 'text') !== false) {
-            $this->logger->info('Gotcha!');
-        }
-
         if ($this->isDebug) {
             return $this->markdownParser->transformMarkdown($text);
         } else {

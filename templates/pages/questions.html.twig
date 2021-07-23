@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ question }}{% endblock %}
+{% block title %}{{ question.name }}{% endblock %}
 
 {% block body %}
 
     <div class="container-fluid text-center my-3">
 
-        <h2>{{ question }}</h2><br>
+        <h2>{{ question.name }}</h2><br>
 
-        <h5>{{ questionText|markdown_filter }}</h5>
+        <h5>{{ question.question|markdown_filter }}</h5>
 
         {% for q in questions %}
             <p>{{ q }}</p>
