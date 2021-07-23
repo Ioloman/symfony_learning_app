@@ -10,6 +10,16 @@
 
         <h5>{{ question.question|markdown_filter }}</h5>
 
+        <h6>Votes: <span>{{ question.votesString }}</span></h6>
+
+        <small class="my-3">
+        {% if question.askedAt %}
+            📅 {{ question.askedAt|ago }}
+        {% else %}
+            (unpublished)
+        {% endif %}
+        </small><br><br>
+
         {% for q in questions %}
             <p>{{ q }}</p>
         {% endfor %}

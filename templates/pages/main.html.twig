@@ -1,7 +1,26 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}The list of questions{% endblock %}
+
 {% block body %}
-<h3>{{ hello }}</h3>
+<h3>This is the main page</h3>
+
+{% for question in questions %}
+    <div class="container-fluid text-center my-3">
+
+        <a href="{{ path('question', {slug: question.slug}) }}">{{ question.name }}</a><br>
+
+        <h5>{{ question.question|markdown_filter }}</h5>
+
+        <small class="my-3">
+            {% if question.askedAt %}
+                📅 {{ question.askedAt|ago }}
+            {% else %}
+                (unpublished)
+            {% endif %}
+        </small><br><br>
+    </div>
+{% endfor %}
 {% endblock %}
 
 {% block javascripts %}{{ parent() }}{% endblock %}

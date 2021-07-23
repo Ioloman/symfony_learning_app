@@ -25,20 +25,13 @@ class QuestionController extends AbstractController
      */
     public function getHomepage(): Response
     {
-        return $this->render('pages/main.html.twig', ['hello' => 'Hellow from controller']);
+        $repository = $this->entityManager->getRepository(Question::class);
+        $questions = $repository->findAllAskedFollowedByNewest();
+        return $this->render('pages/main.html.twig', ['questions' => $questions]);
     }
 
-    public function getQuestion(string $slug): Response
+    public function getQuestion(Question $question): Response
     {
-        $repository = $this->entityManager->getRepository(Question::class);
-        /** @var Question|null $question */
-        $question = $repository->findOneBySlug($slug);
-        // or $repository->findOneBy(['slug' => $slug]);
-
-        if (!$question) {
-            throw $this->createNotFoundException('The requested question is Not Found 😥');
-        }
-
         return $this->render('pages/questions.html.twig', [
             'question' => $question,
             'questions' => [
@@ -63,9 +56,11 @@ voluptatum!
 
 `print(f'python is {cool}')`
 EOF
-            )->setSlug(sprintf("where-do-i-get-laces-%d", rand(100, 999)))
-            ->setAskedAt(new \DateTimeImmutable('-7 days'));
+            )->setSlug(sprintf("where-do-i-get-laces-%d", rand(100, 999)));
 
+        if (rand(1, 10) > 5) {
+            $question->setAskedAt(new \DateTime(sprintf('-%d days', rand(1, 1000))));
+        }
         $this->entityManager->persist($question);
         $this->entityManager->flush();
 
