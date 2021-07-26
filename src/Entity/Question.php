@@ -113,4 +113,14 @@ class Question
 
         return $this;
     }
+
+    public function vote(string $direction): self
+    {
+        if ($direction == 'up') {
+            $this->votes++;
+        } elseif ($direction == 'down') {
+            $this->votes--;
+        }
+        return $this;
+    }
 }

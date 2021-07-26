@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Question;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class QuestionController extends AbstractController
@@ -69,5 +71,16 @@ EOF
             $question->getId(),
             $question->getSlug()
         ));
+    }
+
+    public function questionVote(Question $question, Request $request): Response
+    {
+        $direction = $request->request->get('direction');
+
+        $question->vote($direction);
+
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('question', ["slug" => $question->getSlug()]);
     }
 }

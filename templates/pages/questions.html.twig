@@ -9,9 +9,9 @@
         <h2>{{ question.name }}</h2><br>
 
         <h5>{{ question.question|markdown_filter }}</h5>
-
-        <h6>Votes: <span>{{ question.votesString }}</span></h6>
-
+        <form method="post" action="{{ path('voteQuestion', {slug: question.slug}) }}">
+            <h6>Votes: <span>{{ question.votesString }}</span> <button type="submit" name="direction" value="up" data-vote-button="true" data-vote-direction="up">⬆</button> <button type="submit" name="direction" value="down" data-vote-button="true" data-vote-direction="up">⬇</button></h6>
+        </form>
         <small class="my-3">
         {% if question.askedAt %}
             📅 {{ question.askedAt|ago }}
