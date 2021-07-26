@@ -9,7 +9,7 @@
     <div class="container-fluid text-center my-3">
 
         <a href="{{ path('question', {slug: question.slug}) }}">{{ question.name }}</a><br>
-        <p>{{ question.comments|length }} comments</p>
+        <p>{{ question.nonDeletedComments|length }} comments</p>
         <h5>{{ question.question|markdown_filter }}</h5>
 
         <small class="my-3">
