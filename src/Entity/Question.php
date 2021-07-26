@@ -50,7 +50,7 @@ class Question
     private $votes = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="question")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="question", fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $comments;

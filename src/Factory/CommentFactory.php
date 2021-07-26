@@ -39,6 +39,7 @@ final class CommentFactory extends ModelFactory
             'authorName' => self::faker()->firstName().' '.self::faker()->lastName(),
             'text' => self::faker()->realText().' '.self::faker()->emoji(),
             'createdAt' => self::faker()->dateTimeBetween('-1 month'),
+            'isDeleted' => self::faker()->boolean(20),
         ];
     }
 

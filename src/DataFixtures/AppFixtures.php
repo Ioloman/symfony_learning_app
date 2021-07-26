@@ -15,7 +15,7 @@ class AppFixtures extends Fixture
         QuestionFactory::new()->createMany(20);
 
         CommentFactory::createMany(
-            100,
+            120,
             function () {
                 return ['question' => QuestionFactory::random()];
             }
