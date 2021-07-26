@@ -36,11 +36,6 @@ class QuestionController extends AbstractController
     {
         return $this->render('pages/questions.html.twig', [
             'question' => $question,
-            'questions' => [
-                'How to build a boat? ⛵',
-                'Is Math related to science? 🔬',
-                '2+2=5 confirmed? 🤣',
-            ],
         ]);
     }
 

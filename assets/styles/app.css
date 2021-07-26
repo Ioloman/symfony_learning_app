@@ -3,3 +3,65 @@
 body {
     background-color: lightgray;
 }
+
+
+#commentSection .card {
+    border: none;
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+    border-radius: 4px
+}
+
+#commentSection .dots {
+    height: 4px;
+    width: 4px;
+    margin-bottom: 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block
+}
+
+#commentSection .badge {
+    padding: 7px;
+    padding-right: 9px;
+    padding-left: 16px;
+    box-shadow: 5px 6px 6px 2px #e9ecef
+}
+
+#commentSection .user-img {
+    margin-top: 4px
+}
+
+#commentSection .check-icon {
+    font-size: 17px;
+    color: #c3bfbf;
+    top: 1px;
+    position: relative;
+    margin-left: 3px
+}
+
+#commentSection .form-check-input {
+    margin-top: 6px;
+    margin-left: -24px !important;
+    cursor: pointer
+}
+
+#commentSection .form-check-input:focus {
+    box-shadow: none
+}
+
+#commentSection .icons i {
+    margin-left: 8px
+}
+
+#commentSection .reply {
+    margin-left: 12px
+}
+
+#commentSection .reply small {
+    color: #b7b4b4
+}
+
+#commentSection .reply small:hover {
+    color: green;
+    cursor: pointer
+}
