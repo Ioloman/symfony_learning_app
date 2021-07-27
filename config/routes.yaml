@@ -19,3 +19,8 @@ voteQuestion:
    path: /question/{slug}/vote
    methods: POST
    controller: App\Controller\QuestionController::questionVote
+
+commentAdmin:
+   path: /comment/admin
+   methods: GET
+   controller: App\Controller\CommentAdminController::index

@@ -22,10 +22,13 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ path('index') }}">Home</a>
+                            <a class="nav-link{% if path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) == path('index') %} active{% endif %}" aria-current="page" href="{{ path('index') }}">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Question</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) == path('commentAdmin') %} active{% endif %}" href="{{ path('commentAdmin') }}">Admin Comments</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>

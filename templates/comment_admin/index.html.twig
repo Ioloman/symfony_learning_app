@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Manage Comments{% endblock %}
+
+{% block body %}
+    <h1>Manage Comments</h1>
+
+    <form class="w-25">
+        <div class="input-group mb-3">
+            <input type="text"
+                   name="q"
+                   class="form-control"
+                   value="{{ app.request.query.get('q') }}"
+                   placeholder="Search..."
+            >
+            <div class="input-group-append">
+                <button type="submit"
+                        class="btn btn-outline-secondary">
+                    Search
+                </button>
+            </div>
+        </div>
+    </form>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Article</th>
+            <th>Author</th>
+            <th>Comment</th>
+            <th>Created</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for comment in comments %}
+            <tr>
+                <td>
+                    <a href="{{ path('question', {'slug': comment.question.slug}) }}">
+                        {{ comment.question.name }}
+                    </a>
+                </td>
+                <td>
+                    {{ comment.authorName }}
+                </td>
+                <td style="width: 20%;">
+                    {{ comment.text|u.truncate(40) }}...
+                </td>
+                <td>
+                    {{ comment.createdAt|ago }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" class="text-center">
+                    No comments found
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
