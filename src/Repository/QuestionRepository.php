@@ -38,6 +38,8 @@ class QuestionRepository extends ServiceEntityRepository
     public function findAllAskedFollowedByNewest(): array
     {
         return $this->filterUnpublishedQuestions()
+            ->innerJoin('q.comments', 'c')
+            ->addSelect('c')
             ->orderBy('q.askedAt', 'DESC')
             ->getQuery()
             ->getResult()
