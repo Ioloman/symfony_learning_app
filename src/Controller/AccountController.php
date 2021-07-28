@@ -16,4 +16,9 @@ class AccountController extends AbstractController
     {
         return $this->render('account/index.html.twig', []);
     }
+
+    public function accountApi(): Response
+    {
+        return $this->json($this->getUser(), 200, [], ['groups' => ['main']]);
+    }
 }
