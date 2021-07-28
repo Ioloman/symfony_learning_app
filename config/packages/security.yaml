@@ -8,6 +8,14 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+    password_hashers:
+        # use your user class name here
+        App\Entity\User:
+            # Use native password hasher, which auto-selects the best
+            # possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
+            algorithm: argon2i
+            # Default null. Higher value - higher encryption complexity
+            cost: 10
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -16,10 +24,12 @@ security:
             lazy: true
             provider: app_user_provider
             custom_authenticator: App\Security\AppAuthenticator
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 5000000
             logout:
                 path: logout
-                # where to redirect after logout
-                # target: app_any_route
+#                target: index
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -30,5 +40,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+#         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
