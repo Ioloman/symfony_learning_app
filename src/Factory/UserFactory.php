@@ -36,12 +36,19 @@ final class UserFactory extends ModelFactory
         $this->hasher = $hasher;
     }
 
+    public function adminUsers(): self
+    {
+        return $this->addState([
+            'roles' => ["ROLE_ADMIN"],
+            'email' => 'admin@sibers.com'
+        ]);
+    }
+
     protected function getDefaults(): array
     {
         return [
             // TODO add your default values here (https://github.com/zenstruck/foundry#model-factories)
             'email' => self::faker()->email(),
-            'roles' => ['main_users'],
             'firstName' => self::faker()->firstName(),
             'password' => '1234',
         ];

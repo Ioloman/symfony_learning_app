@@ -11,5 +11,6 @@ class UserFixture extends Fixture
     public function load(ObjectManager $manager)
     {
         UserFactory::createMany(10);
+        UserFactory::new()->adminUsers()->create();
     }
 }
