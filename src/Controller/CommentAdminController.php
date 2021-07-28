@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommentAdminController extends AbstractController
 {
     /**
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ADMIN_COMMENT")
      */
     public function index(CommentRepository $repository, Request $request, PaginatorInterface $paginator): Response
     {
