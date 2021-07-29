@@ -27,6 +27,11 @@ createQuestionAdmin:
    methods: GET
    controller: App\Controller\QuestionAdminController::create
 
+editQuestionAdmin:
+   path: /admin/question/{id}/edit
+   methods: GET|POST
+   controller: App\Controller\QuestionAdminController::edit
+
 commentAdmin:
    path: /admin/comment
    methods: GET
@@ -43,6 +48,11 @@ logout:
    path: /logout
    methods: GET
    controller: App\Controller\SecurityController::logout
+
+register:
+   path: /register
+   methods: GET|POST
+   controller: App\Controller\SecurityController::register
 
 # --------------------- Account ---------------------------
 account:

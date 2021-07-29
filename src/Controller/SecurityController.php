@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Security\AppAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class SecurityController extends AbstractController
 {
@@ -25,6 +30,32 @@ class SecurityController extends AbstractController
 
     public function logout()
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        // entrypoint for symfony logout magic
+    }
+
+    public function register(
+        Request $request,
+        UserPasswordHasherInterface $hasher,
+        UserAuthenticatorInterface $authenticationManager,
+        AppAuthenticator $authenticator): Response
+    {
+        if ($request->isMethod('POST')) {
+            $user = new User();
+            $user->setEmail($request->request->get('email'));
+            $user->setFirstName('Mystery');
+            $user->setPassword($hasher->hashPassword($user, $request->request->get('password')));
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $authenticationManager->authenticateUser(
+                $user,
+                $authenticator,
+                $request
+            );
+        }
+
+        return $this->render('security/register.html.twig', []);
     }
 }

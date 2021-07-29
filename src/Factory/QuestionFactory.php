@@ -47,6 +47,7 @@ final class QuestionFactory extends ModelFactory
             'question' => self::faker()->paragraphs(self::faker()->numberBetween(1, 4), true),
             'votes' => self::faker()->numberBetween(-20, 20),
             'askedAt' => self::faker()->dateTimeBetween('-2 years'),
+            'author' => UserFactory::random()
         ];
     }
 
