@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserRegistrationFormType;
 use App\Security\AppAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,11 +40,18 @@ class SecurityController extends AbstractController
         UserAuthenticatorInterface $authenticationManager,
         AppAuthenticator $authenticator): Response
     {
-        if ($request->isMethod('POST')) {
-            $user = new User();
-            $user->setEmail($request->request->get('email'));
-            $user->setFirstName('Mystery');
-            $user->setPassword($hasher->hashPassword($user, $request->request->get('password')));
+        $form = $this->createForm(UserRegistrationFormType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $user */
+            $user = $form->getData();
+            $user->setPassword($hasher->hashPassword($user, $form['formPassword']->getData()));
+
+            if ($form['agreeTerms']) {
+                $user->agreeTerms();
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -56,6 +64,8 @@ class SecurityController extends AbstractController
             );
         }
 
-        return $this->render('security/register.html.twig', []);
+        return $this->render('security/register.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

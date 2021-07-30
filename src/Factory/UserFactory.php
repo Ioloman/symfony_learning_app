@@ -60,6 +60,7 @@ final class UserFactory extends ModelFactory
         return $this
              ->afterInstantiate(function(User $user) {
                  $user->setPassword($this->hasher->hashPassword($user, $user->getPassword()));
+                 $user->agreeTerms();
              })
         ;
     }

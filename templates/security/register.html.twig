@@ -1,25 +1,49 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Register{% endblock %}
+{% form_theme form _self %}
 
 {% block body %}
     <div class="container">
         <div class="row">
             <div class="col-8">
-                <form method="post">
-                    <h1 class="h3 mb-3 font-weight-normal">Register</h1>
-                    <label for="inputEmail">Email</label>
-                    <input type="email" name="email" id="inputEmail" class="form-control my-3"
-                           autocomplete="email" required autofocus>
-                    <label for="inputPassword">Password</label>
-                    <input type="password" name="password" id="inputPassword" class="form-control my-3"
-                           autocomplete="current-password" required>
 
-                    <button class="btn btn-lg btn-primary" type="submit">
-                        Register
-                    </button>
-                </form>
+                {{ form_start(form, {
+                    attr: {class: 'form-signin'}
+                }) }}
+                <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+                {{ form_widget(form) }}
+
+                <button class="btn btn-lg btn-primary" type="submit">
+                    Register
+                </button>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>
 {% endblock %}
+
+
+
+{%- block form_row -%}
+    {%- if compound is defined and compound -%}
+        {%- set element = 'fieldset' -%}
+    {%- endif -%}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- endif -%}
+    {%- set row_class = row_class|default(row_attr.class|default('mb-3')|trim) -%}
+    <{{ element|default('div') }}{% with {attr: row_attr|merge({class: row_class})} %}{{ block('attributes') }}{% endwith %}>
+    {%- if 'form-floating' in row_class -%}
+        {{- form_errors(form) -}}
+        {{- form_widget(form, widget_attr) -}}
+        {{- form_label(form) -}}
+    {%- else -%}
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {{- form_widget(form, widget_attr) -}}
+    {%- endif -%}
+    {{- form_help(form) -}}
+    </{{ element|default('div') }}>
+{%- endblock form_row %}
