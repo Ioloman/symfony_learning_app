@@ -25,7 +25,7 @@
                             <a class="nav-link{{ active('index') }}" aria-current="page" href="{{ path('index') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Question</a>
+                            <a class="nav-link{{ active('listQuestionAdmin') }}" href="{{ path('listQuestionAdmin') }}">Questions</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link{{ active('commentAdmin') }}" href="{{ path('commentAdmin') }}">Admin Comments</a>
@@ -54,6 +54,12 @@
         </nav>
     </header>
     <main>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         {% block body %}{% endblock %}
     </main>
     <footer></footer>

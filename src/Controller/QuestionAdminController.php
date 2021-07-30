@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Question;
+use App\Form\QuestionFormType;
+use App\Repository\QuestionRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class QuestionAdminController extends AbstractController
@@ -12,9 +16,33 @@ class QuestionAdminController extends AbstractController
     /**
      * @IsGranted("ROLE_ADMIN_QUESTION")
      */
-    public function create(): Response
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('question_admin/create.html.twig', []);
+        $form = $this->createForm(QuestionFormType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Question $question */
+            $question = $form->getData();
+            
+            $entityManager->persist($question);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Question is submitted!');
+
+            return $this->redirectToRoute('listQuestionAdmin');
+        }
+
+        return $this->render('question_admin/create.html.twig', [
+            'questionForm' => $form->createView(),
+        ]);
+    }
+
+    public function list(QuestionRepository $repository): Response
+    {
+        return $this->render('question_admin/list.html.twig', [
+            'questions' => $repository->findAll(),
+        ]);
     }
 
     /**

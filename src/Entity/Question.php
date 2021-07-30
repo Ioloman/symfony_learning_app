@@ -120,6 +120,11 @@ class Question
         return $this;
     }
 
+    public function isAsked(): bool
+    {
+        return $this->getAskedAt() !== null;
+    }
+
     public function getVotes(): int
     {
         return $this->votes;

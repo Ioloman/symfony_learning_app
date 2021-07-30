@@ -24,13 +24,18 @@ voteQuestion:
 
 createQuestionAdmin:
    path: /admin/question/new
-   methods: GET
+   methods: GET|POST
    controller: App\Controller\QuestionAdminController::create
 
 editQuestionAdmin:
    path: /admin/question/{id}/edit
    methods: GET|POST
    controller: App\Controller\QuestionAdminController::edit
+
+listQuestionAdmin:
+   path: admin/question/
+   methods: GET
+   controller: App\Controller\QuestionAdminController::list
 
 commentAdmin:
    path: /admin/comment

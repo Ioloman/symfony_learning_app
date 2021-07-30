@@ -3,5 +3,15 @@
 {% block title %}Create New Question{% endblock %}
 
 {% block body %}
-asdasd
+<h1>Launch a new article! 🚀</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+        {{ form_start(questionForm) }}
+            {{ form_widget(questionForm) }}
+            <button type="submit" class="btn btn-primary">Create 📰</button>
+        {{ form_end(questionForm) }}
+        </div>
+    </div>
+</div>
 {% endblock %}
