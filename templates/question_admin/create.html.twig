@@ -7,10 +7,7 @@
 <div class="container">
     <div class="row">
         <div class="col-6">
-        {{ form_start(questionForm) }}
-            {{ form_widget(questionForm) }}
-            <button type="submit" class="btn btn-primary">Create 📰</button>
-        {{ form_end(questionForm) }}
+            {{ include('question_admin/_form.html.twig', {button_text: 'Create 😎'}) }}
         </div>
     </div>
 </div>

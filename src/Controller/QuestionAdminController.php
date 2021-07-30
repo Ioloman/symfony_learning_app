@@ -38,6 +38,9 @@ class QuestionAdminController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN_QUESTION")
+     */
     public function list(QuestionRepository $repository): Response
     {
         return $this->render('question_admin/list.html.twig', [
@@ -48,8 +51,22 @@ class QuestionAdminController extends AbstractController
     /**
      * @IsGranted("MANAGE", subject="question")
      */
-    public function edit(Question $question): Response
+    public function edit(Question $question, Request $request, EntityManagerInterface $entityManager): Response
     {
-        return $this->json('good');
+        $form = $this->createForm(QuestionFormType::class, $question);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($question);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Question is Updated!');
+
+            return $this->redirectToRoute('editQuestionAdmin', ['id' => $question->getId()]);
+        }
+
+        return $this->render('question_admin/edit.html.twig', [
+            'questionForm' => $form->createView(),
+        ]);
     }
 }

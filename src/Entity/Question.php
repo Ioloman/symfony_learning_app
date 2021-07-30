@@ -9,6 +9,8 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass=QuestionRepository::class)
@@ -26,6 +28,7 @@ class Question
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Get a life bruh")
      */
     private $name;
 
@@ -202,5 +205,18 @@ class Question
         $this->author = $author;
 
         return $this;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if (stripos($this->getName(), 'Potato') !== false) {
+            $context->buildViolation('Um... Potato - Potáto. Kinda sus')
+                ->atPath('name')
+                ->addViolation()
+            ;
+        }
     }
 }

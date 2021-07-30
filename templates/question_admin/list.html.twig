@@ -16,6 +16,7 @@
             <th>Title</th>
             <th>Author</th>
             <th>Asked?</th>
+            <th>&nbsp;</th>
         </tr>
         </thead>
         <tbody>
@@ -31,6 +32,9 @@
                 </td>
                 <td style="width: 20%;">
                     {{ question.isAsked ? 'YAY ✅' : 'NAY ❎' }}
+                </td>
+                <td>
+                    <a href="{{ path('editQuestionAdmin', {id: question.id})}}" style="text-decoration: none;">✏</a>
                 </td>
             </tr>
         {% else %}
