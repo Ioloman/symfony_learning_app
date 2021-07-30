@@ -12,7 +12,9 @@
                     attr: {class: 'form-signin'}
                 }) }}
                 <h1 class="h3 mb-3 font-weight-normal">Register</h1>
-                {{ form_widget(form) }}
+                {{ form_row(form.email, {attr: {placeholder: 'Email'}}) }}
+                {{ form_row(form.formPassword, {attr: {placeholder: 'Password'}}) }}
+                {{ form_row(form.agreeTerms) }}
 
                 <button class="btn btn-lg btn-primary" type="submit">
                     Register
@@ -38,9 +40,9 @@
     {%- if 'form-floating' in row_class -%}
         {{- form_errors(form) -}}
         {{- form_widget(form, widget_attr) -}}
-        {{- form_label(form) -}}
+        {{- form_label(form, null, {label_attr: {class: 'visually-hidden'}}) -}}
     {%- else -%}
-        {{- form_label(form) -}}
+        {{- form_label(form, null, {label_attr: {class: 'visually-hidden'}}) -}}
         {{- form_errors(form) -}}
         {{- form_widget(form, widget_attr) -}}
     {%- endif -%}
