@@ -59,7 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $apiTokens;
 
     /**
-     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="author", fetch="EXTRA_LAZY")
      */
     private $questions;
 

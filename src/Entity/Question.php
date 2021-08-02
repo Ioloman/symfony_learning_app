@@ -38,7 +38,7 @@ class Question
     private $slug;
 
     /**
-     * @ORM\Column(type="text", fetch="EXTRA_LAZY")
+     * @ORM\Column(type="text")
      */
     private $question;
 
@@ -73,6 +73,11 @@ class Question
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $specificTopic;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageFilename;
 
     public function __construct()
     {
@@ -253,6 +258,18 @@ class Question
     public function setSpecificTopic(?string $specificTopic): self
     {
         $this->specificTopic = $specificTopic;
+
+        return $this;
+    }
+
+    public function getImageFilename(): ?string
+    {
+        return $this->imageFilename;
+    }
+
+    public function setImageFilename(?string $imageFilename): self
+    {
+        $this->imageFilename = $imageFilename;
 
         return $this;
     }

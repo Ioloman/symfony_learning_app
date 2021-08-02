@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -56,6 +57,10 @@ class QuestionFormType extends AbstractType
                 ],
                 'required' => false,
                 'placeholder' => 'Choose a topic'
+            ])
+            ->add('imageFile', FileType::class, [
+                'mapped' => false,
+                'required' => false
             ])
         ;
 

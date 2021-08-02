@@ -1,5 +1,6 @@
 {{ form_start(questionForm) }}
 {{ form_row(questionForm.name, {label: "Your question's title"}) }}
+{{ form_row(questionForm.imageFile) }}
 {{ form_row(questionForm.question, {attr: {rows: 7}}) }}
 {% if questionForm.askedAt is defined %}
     {{ form_row(questionForm.askedAt) }}

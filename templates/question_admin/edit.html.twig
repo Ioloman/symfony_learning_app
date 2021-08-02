@@ -6,6 +6,13 @@
     <h1>Edit an article! 📝</h1>
     <div class="container">
         <div class="row">
+{#            <div class="col-6 mb-3">#}
+{#                <form action="{{ path('upload') }}" enctype="multipart/form-data" method="POST">#}
+{#                    <input type="file" name="image"/>#}
+{#                    <button type="submit" class="btn btn-primary">Upload</button>#}
+{#                </form>#}
+{#            </div>#}
+{#            <hr>#}
             <div class="col-6">
                 {{ include('question_admin/_form.html.twig', {button_text: 'Update 🗞'}) }}
             </div>
