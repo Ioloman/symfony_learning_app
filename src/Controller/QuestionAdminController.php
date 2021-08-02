@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Question;
 use App\Form\QuestionFormType;
 use App\Repository\QuestionRepository;
+use App\Service\UploadHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Sluggable\Util\Urlizer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -17,6 +18,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class QuestionAdminController extends AbstractController
 {
+    private UploadHelper $uploadHelper;
+
+    public function __construct(UploadHelper $uploadHelper)
+    {
+        $this->uploadHelper = $uploadHelper;
+    }
+
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(QuestionFormType::class);
@@ -25,6 +33,15 @@ class QuestionAdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Question $question */
             $question = $form->getData();
+
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form->get('imageFile')->getData();
+
+            if ($uploadedFile) {
+                $newFilename = $this->uploadHelper->uploadQuestionImage($uploadedFile);
+
+                $question->setImageFilename($newFilename);
+            }
             
             $entityManager->persist($question);
             $entityManager->flush();
@@ -62,14 +79,7 @@ class QuestionAdminController extends AbstractController
             $uploadedFile = $form->get('imageFile')->getData();
 
             if ($uploadedFile) {
-                $destination = $this->getParameter('kernel.project_dir').'/public/uploads/question_images';
-
-                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$uploadedFile->guessExtension();
-                $uploadedFile->move(
-                    $destination,
-                    $newFilename
-                );
+                $newFilename = $this->uploadHelper->uploadQuestionImage($uploadedFile);
 
                 $question->setImageFilename($newFilename);
             }

@@ -11,6 +11,7 @@ services:
     _defaults:
         bind:
             $isDebug: '%kernel.debug%'
+            $uploadsPath: '%kernel.project_dir%/public/uploads'
             Psr\Log\LoggerInterface $logger: '@monolog.logger.profiler'
 
         autowire: true      # Automatically injects dependencies in your services.
