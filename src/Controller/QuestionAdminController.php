@@ -53,7 +53,7 @@ class QuestionAdminController extends AbstractController
      */
     public function edit(Question $question, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(QuestionFormType::class, $question);
+        $form = $this->createForm(QuestionFormType::class, $question, ['include_asked_at' => false]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

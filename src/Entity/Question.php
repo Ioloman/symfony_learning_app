@@ -64,6 +64,16 @@ class Question
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $topic;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $specificTopic;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -217,5 +227,29 @@ class Question
                 ->addViolation()
             ;
         }
+    }
+
+    public function getTopic(): ?string
+    {
+        return $this->topic;
+    }
+
+    public function setTopic(?string $topic): self
+    {
+        $this->topic = $topic;
+
+        return $this;
+    }
+
+    public function getSpecificTopic(): ?string
+    {
+        return $this->specificTopic;
+    }
+
+    public function setSpecificTopic(?string $specificTopic): self
+    {
+        $this->specificTopic = $specificTopic;
+
+        return $this;
     }
 }
