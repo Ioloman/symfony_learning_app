@@ -13,6 +13,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class QuestionFormType extends AbstractType
 {
@@ -58,11 +60,20 @@ class QuestionFormType extends AbstractType
                 'required' => false,
                 'placeholder' => 'Choose a topic'
             ])
-            ->add('imageFile', FileType::class, [
-                'mapped' => false,
-                'required' => false
-            ])
         ;
+
+        $imageConstraints = [
+            new Image(),
+        ];
+        if (!$isEdit || !$question->getImageFilename()) {
+            $imageConstraints[] = new NotNull(['message' => 'Please upload an image']);
+        }
+
+        $builder->add('imageFile', FileType::class, [
+            'mapped' => false,
+            'required' => false,
+            'constraints' => $imageConstraints
+        ]);
 
         if ($options['include_asked_at']) {
             $builder->add(
