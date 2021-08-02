@@ -8,6 +8,9 @@ use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionFormType extends AbstractType
@@ -24,7 +27,6 @@ class QuestionFormType extends AbstractType
         /** @var Question|null $question */
         $question = $options['data'] ?? null;
         $isEdit = $question && $question->getId();
-        $topic = $question?->getTopic();
 
         $builder
             ->add(
@@ -56,14 +58,6 @@ class QuestionFormType extends AbstractType
                 'placeholder' => 'Choose a topic'
             ])
         ;
-        $subtopics = $topic ? $this->getSpecificTopic($topic) : null;
-        if ($topic && $subtopics) {
-            $builder->add('specificTopic', ChoiceType::class, [
-                'choices' => $subtopics,
-                'required' => false,
-                'placeholder' => 'Choose a subtopic'
-            ]);
-        }
 
         if ($options['include_asked_at']) {
             $builder->add(
@@ -72,6 +66,56 @@ class QuestionFormType extends AbstractType
                 ['widget' => 'single_text']
             );
         }
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function(FormEvent $event) {
+                /** @var Question|null $data */
+                $data = $event->getData();
+                if (!$data) {
+                    return;
+                }
+
+                $this->setupSpecificTopicField(
+                    $event->getForm(),
+                    $data->getTopic()
+                );
+            }
+        );
+
+        $builder->get('topic')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function(FormEvent $event) {
+                $form = $event->getForm();
+                $this->setupSpecificTopicField(
+                    $form->getParent(),
+                    $form->getData()
+                );
+            }
+        );
+    }
+
+    private function setupSpecificTopicField(FormInterface $form, ?string $topic)
+    {
+        if ($topic === null) {
+            $form->remove('specificTopic');
+
+            return;
+        }
+
+        $subtopics = $this->getSpecificTopic($topic);
+
+        if ($subtopics === null) {
+            $form->remove('specificTopic');
+
+            return;
+        }
+
+        $form->add('specificTopic', ChoiceType::class, [
+            'choices' => $subtopics,
+            'required' => false,
+            'placeholder' => 'Choose a subtopic'
+        ]);
     }
 
     private function getSpecificTopic(?string $topic)
@@ -94,7 +138,7 @@ class QuestionFormType extends AbstractType
             'potions' => null
         ];
 
-        return $subtopics[$topic];
+        return $subtopics[$topic] ?? null;
     }
 
     public function configureOptions(OptionsResolver $resolver)

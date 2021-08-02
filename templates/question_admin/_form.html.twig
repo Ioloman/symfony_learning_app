@@ -4,10 +4,16 @@
 {% if questionForm.askedAt is defined %}
     {{ form_row(questionForm.askedAt) }}
 {% endif %}
-{{ form_row(questionForm.topic) }}
-{% if questionForm.specificTopic is defined %}
-    {{ form_row(questionForm.specificTopic) }}
-{% endif %}
+{{ form_row(questionForm.topic, {
+    attr: {
+        'data-specific-topic-url': path('adminGetSubtopics'),
+    },
+}) }}
+<div id="js-specific-topic-target">
+    {% if questionForm.specificTopic is defined %}
+        {{ form_row(questionForm.specificTopic) }}
+    {% endif %}
+</div>
 {{ form_row(questionForm.author) }}
 <button type="submit" class="btn btn-primary">{{ button_text }}</button>
 {{ form_end(questionForm) }}

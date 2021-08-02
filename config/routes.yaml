@@ -42,6 +42,11 @@ commentAdmin:
    methods: GET
    controller: App\Controller\CommentAdminController::index
 
+adminGetSubtopics:
+   path: /api/admin/question/get-subtopic-choices
+   methods: GET
+   controller: App\Controller\QuestionAdminController::getSpecificTopicChoices
+
 # ----------------- Security ----------------
 
 login:

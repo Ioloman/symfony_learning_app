@@ -38,7 +38,7 @@ class Question
     private $slug;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", fetch="EXTRA_LAZY")
      */
     private $question;
 
@@ -237,6 +237,10 @@ class Question
     public function setTopic(?string $topic): self
     {
         $this->topic = $topic;
+
+        if (!$topic || $topic === 'potions') {
+            $this->setSpecificTopic(null);
+        }
 
         return $this;
     }
